@@ -10,12 +10,17 @@ controllers:
         securityContext:
           runAsUser: 0
           runAsGroup: 0
+          seccompProfile:
+            type: RuntimeDefault
     containers:
       trilium:
         image:
           repository: triliumnext/notes
           tag: v0.90.8
           pullPolicy: IfNotPresent
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
 
         probes:
           startup:
@@ -86,5 +91,5 @@ service:
 {{- $ctx := deepCopy . -}}
 # Merge with ALL the values in `values.yaml`
 {{- $_ := mergeOverwrite .Values $ctx.Values -}}
-{{- $_ = include "trilium.hardcodedValues" . | fromYaml | merge $ctx.Values -}}
+{{- $_ = include "trilium.hardcodedValues" . | fromYaml | mergeOverwrite $ctx.Values -}}
 {{- include "bjw-s.common.loader.all" $ctx }}
