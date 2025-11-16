@@ -8,7 +8,7 @@ controllers:
     containers:
       trilium:
         image:
-          repository: ghcr.io/triliumnext/notes
+          repository: triliumnext/notes
           tag: v0.92.4
           pullPolicy: IfNotPresent
         env:
